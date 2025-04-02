@@ -1,0 +1,20 @@
+{
+    "name": "wilbis/authserver-jwt",
+    "description": "Servidor de tokens JWT.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "AuthServerJwt\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wilbispaulo",
+            "email": "wilbispaulo@hotmail.com"
+        }
+    ],
+    "require": {
+        "web-token/jwt-framework": "^4.0"
+    }
+}
