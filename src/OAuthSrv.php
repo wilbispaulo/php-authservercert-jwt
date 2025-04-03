@@ -19,7 +19,8 @@ class OAuthSrv
 
     public function __construct(
         private string $clientAud,
-        private string $pathToP12
+        private string $pathToP12,
+        private string $secretCert
     ) {
         if (count($p12 = glob($this->pathToP12)) > 0) {
             $this->setPrivateKeyP12($p12[0]);
@@ -28,7 +29,7 @@ class OAuthSrv
     private function setPrivateKeyP12(string $pathToP12)
     {
         $certP12 = file_get_contents($pathToP12);
-        openssl_pkcs12_read($certP12, $certPEM, $_ENV['CERT_SECRET']);
+        openssl_pkcs12_read($certP12, $certPEM, $this->secretCert);
         $this->privatePEM = $certPEM['pkey'];
         $this->setJWKPrivateKey();
     }
