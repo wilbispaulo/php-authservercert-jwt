@@ -1,5 +1,5 @@
 {
-    "name": "wilbispaulo/authserver-jwt",
+    "name": "wilbispaulo/authservercert-jwt",
     "description": "Servidor de tokens JWT.",
     "type": "library",
     "license": "MIT",
