@@ -63,7 +63,7 @@ class OAuthSrv
         ];
     }
 
-    public function tokenJWT(string $issuer, int $tokenExp, string $clientId, string $clientSecret, array $scope): string
+    public function tokenJWT(string $issuer, int $tokenExp, array $scope): string
     {
         $baseTime = time();
         $baseClaims = [
