@@ -46,16 +46,14 @@ class OAuthSrv
         );
     }
 
-    public function genCredentials(): array
+    public function genCredentials(string $secret): array
     {
-        $credId = microtime(true) . '.' . bin2hex(random_bytes(10));
         $timeCred = (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->getTimestamp();
         $clientId = self::uuidv4();
-        $credentialPlainText = $this->clientAud . '#' . $clientId . '#' . (string)$timeCred . '%' . $credId;
+        $credentialPlainText = $this->clientAud . '#' . $clientId . '#' . (string)$timeCred . '%' . $secret;
         $clientSecret = base64_encode(password_hash($credentialPlainText, PASSWORD_BCRYPT));
 
         return [
-            'credential_id' => $credId,
             'credential_time' => $timeCred,
             'client_aud' => $this->clientAud,
             'client_id' => $clientId,
