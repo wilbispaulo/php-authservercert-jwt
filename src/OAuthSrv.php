@@ -11,11 +11,11 @@ use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 
-
 class OAuthSrv
 {
     private string $privatePEM;
     private JWK $privateJWK;
+    private $claims = [];
 
     public function __construct(
         private string $clientAud,
@@ -66,7 +66,7 @@ class OAuthSrv
     public function tokenJWT(string $issuer, int $tokenExp, array $scope): string
     {
         $baseTime = time();
-        $baseClaims = [
+        $this->claims = [
             'iat' => $baseTime,
             'nbf' => $baseTime,
             'exp' => $baseTime + $tokenExp,
@@ -75,7 +75,7 @@ class OAuthSrv
             'scope' => $scope,
         ];
         $jwsBuilder = new JWSBuilder(new AlgorithmManager([new RS256]));
-        $payload = json_encode($baseClaims);
+        $payload = json_encode($this->claims);
 
         $jws = $jwsBuilder
             ->create()
@@ -90,6 +90,11 @@ class OAuthSrv
             ->build();
         $serializer = new CompactSerializer;
         return (new CompactSerializer)->serialize($jws, 0);
+    }
+
+    public function getClaims()
+    {
+        return $this->claims;
     }
 
     public static function uuidv4(): string
