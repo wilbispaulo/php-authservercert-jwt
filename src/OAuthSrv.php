@@ -24,7 +24,10 @@ class OAuthSrv
     ) {
         if (count($p12 = glob($this->pathToP12)) > 0) {
             $this->setPrivateKeyP12($p12[0]);
-        };
+        } else {
+            var_dump($this->pathToP12);
+            die();
+        }
     }
     private function setPrivateKeyP12(string $pathToP12)
     {
